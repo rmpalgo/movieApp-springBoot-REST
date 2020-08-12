@@ -18,7 +18,7 @@ $(document).ready( () => {
   <span><i class="fas fa-ellipsis-h three-dots" ></i></span>
   <div class="dropdown-content">
   <p class="edit-title" data-id="${title}/${id}">Edit</p>
-  <a id="delete-movie" data-id="${id}">Delete</a>
+  <p id="delete-movie" data-id="${id}">Delete</p>
   </div>
 </div>
  <img src="${poster}" class="card-img-top" alt="..."><p class="pt-1"><span>${title}</span> <span>${rating}</span></p></div>`
@@ -26,7 +26,6 @@ $(document).ready( () => {
             $('#movies-display').html(HTML);
             editMovieForm();
             deleteMovie();
-
         }).catch((error) => {
             console.log(error);
         });
@@ -69,10 +68,14 @@ $(document).ready( () => {
     }
 
     function deleteMovie() {
-        $('#delete-movie').on("click", function(e) {
+        $('p#delete-movie').on('click', function(e) {
             e.preventDefault();
             let dataID = $(this).attr('data-id');
-            api.deleteMovie(dataID).then( response => response.json() )
+            console.log("delete ID" + dataID)
+            api.deleteMovie(dataID).then( response => {
+                renderLoading();
+                displayMoviesFromJSON();
+            } )
                 .catch( error => console.log(error));
         });
     }
