@@ -17,7 +17,7 @@ const api = {
             .catch( error => console.log(error));
     },
     editMovie: (movieObj, id) => {
-        return fetch(`/api/movies/${id}`, {
+        return fetch(`/api/movies/update`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',

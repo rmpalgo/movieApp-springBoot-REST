@@ -2,10 +2,7 @@ package com.movieapp.movieapp.controllers;
 
 import com.movieapp.movieapp.model.Movie;
 import com.movieapp.movieapp.services.MovieService;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,5 +24,11 @@ public class MovieController {
     public List<Movie> getAllMovies() {
         return movieService.getMovies();
     }
+
+    @PutMapping("/api/movies/update")
+    public Movie updateProduct(@RequestBody Movie movie) {
+        return movieService.updateMovie(movie);
+    }
+
 
 }

@@ -96,6 +96,7 @@ $(document).ready( () => {
         api.getOMBDData( newTitle ).then( movieData => {
             let newMoviePoster = movieData.Search[0].Poster;
             let newMovieObj = {
+                id: uniqueID,
                 title: newTitle,
                 rating: newRating,
                 poster: newMoviePoster
