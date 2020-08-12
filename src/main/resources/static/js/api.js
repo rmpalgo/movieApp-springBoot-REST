@@ -26,6 +26,15 @@ const api = {
         });
     },
 
+    deleteMovie: (id) => {
+        return fetch(`/api/movies/${id}`, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        });
+    },
+
     getOMBDData: (addMovieTitle) => {
         return fetch(`http://www.omdbapi.com?s=${addMovieTitle}&apikey=${ombd_key}`)
             .then( response => response.json() );

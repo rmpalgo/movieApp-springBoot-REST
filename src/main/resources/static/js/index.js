@@ -18,13 +18,14 @@ $(document).ready( () => {
   <span><i class="fas fa-ellipsis-h three-dots" ></i></span>
   <div class="dropdown-content">
   <p class="edit-title" data-id="${title}/${id}">Edit</p>
-  <p>Delete</p>
+  <a id="delete-movie" data-id="${id}">Delete</a>
   </div>
 </div>
  <img src="${poster}" class="card-img-top" alt="..."><p class="pt-1"><span>${title}</span> <span>${rating}</span></p></div>`
             });
             $('#movies-display').html(HTML);
             editMovieForm();
+            deleteMovie();
 
         }).catch((error) => {
             console.log(error);
@@ -64,6 +65,15 @@ $(document).ready( () => {
                 console.log(newRating);
                 editMovieToJSON(uniqueID, newTitle, newRating);
             });
+        });
+    }
+
+    function deleteMovie() {
+        $('#delete-movie').on("click", function(e) {
+            e.preventDefault();
+            let dataID = $(this).attr('data-id');
+            api.deleteMovie(dataID).then( response => response.json() )
+                .catch( error => console.log(error));
         });
     }
 
