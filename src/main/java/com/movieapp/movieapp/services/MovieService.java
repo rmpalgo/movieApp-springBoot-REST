@@ -32,6 +32,11 @@ public class MovieService {
         return "Movie deleted || " + id;
     }
 
+    //Get Single Movie
+    public Movie getMovieById(long id) {
+        return moviesRepository.findById(id).orElse(null);
+    }
+
     //update Movie
     public Movie updateMovie(Movie movie) {
         Movie existingMovie = moviesRepository.findById(movie.getId()).orElse(null);

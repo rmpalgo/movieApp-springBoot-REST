@@ -21,11 +21,12 @@ $(document).ready( () => {
   <p id="delete-movie" data-id="${id}">Delete</p>
   </div>
 </div>
- <img src="${poster}" class="card-img-top" alt="..."><p class="pt-1"><span>${title}</span> <span>${rating}</span></p></div>`
+ <img src="${poster}" data-id="${id}" id="poster-img" class="card-img-top" alt="..."><p class="pt-1"><p>${title}</p> <span>${rating}</span></p></div>`
             });
             $('#movies-display').html(HTML);
             editMovieForm();
             deleteMovie();
+            singlePageView();
         }).catch((error) => {
             console.log(error);
         });
@@ -129,6 +130,14 @@ $(document).ready( () => {
                 displayMoviesFromJSON();
             });
         }).catch( error => console.log(error) );
+    }
+
+    function singlePageView() {
+        let singleTitle = $("img#poster-img");
+        singleTitle.on("click", function () {
+            console.log($(this).attr('data-id'));
+        });
+        singleTitle.css("cursor", "pointer");
     }
 
 });
