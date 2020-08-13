@@ -144,13 +144,12 @@ $(document).ready( () => {
     }
 
     function viewSinglePage(id) {
+        renderLoading();
         let mainPage = $('#movies-display');
         mainPage.empty();
-        renderLoading();
         let HTML = ``;
         api.getSingleMovie(id).then( (movie) => {
             console.log(movie);
-
                 HTML += `<div class="card mt-6 bg-transparent" style="width: 15rem;">
                 <div class="dropdown">
                     <span><i class="fas fa-ellipsis-h three-dots" style="left: 220px"></i></span>
@@ -163,5 +162,10 @@ $(document).ready( () => {
             mainPage.html(HTML);
         })
     }
+
+    $("#notflix-icon").click(() => {
+        renderLoading();
+        displayMoviesFromJSON();
+    });
 
 });
