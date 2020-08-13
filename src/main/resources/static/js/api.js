@@ -35,6 +35,15 @@ const api = {
         });
     },
 
+    getSingleMovie: (id) => {
+        return fetch(`/api/movies/${id}`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        }).then( response => response.json() );
+    },
+
     getOMBDData: (addMovieTitle) => {
         return fetch(`http://www.omdbapi.com?s=${addMovieTitle}&apikey=${ombd_key}`)
             .then( response => response.json() );

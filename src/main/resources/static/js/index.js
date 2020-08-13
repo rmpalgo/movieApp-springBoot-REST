@@ -135,9 +135,33 @@ $(document).ready( () => {
     function singlePageView() {
         let singleTitle = $("img#poster-img");
         singleTitle.on("click", function () {
-            console.log($(this).attr('data-id'));
+            let id = $(this).attr('data-id');
+            console.log(id);
+            viewSinglePage(id);
+
         });
         singleTitle.css("cursor", "pointer");
+    }
+
+    function viewSinglePage(id) {
+        let mainPage = $('#movies-display');
+        mainPage.empty();
+        renderLoading();
+        let HTML = ``;
+        api.getSingleMovie(id).then( (movie) => {
+            console.log(movie);
+
+                HTML += `<div class="card mt-6 bg-transparent" style="width: 15rem;">
+                <div class="dropdown">
+                    <span><i class="fas fa-ellipsis-h three-dots" style="left: 220px"></i></span>
+                <div class="dropdown-content" style="min-width: 220px">
+                 <p class="edit-title" data-id="${movie.title}/${movie.id}">Edit</p>
+                <p id="delete-movie" data-id="${movie.id}">Delete</p>
+                </div>
+                </div>
+                <img src="${movie.poster}" data-id="${movie.id}" id="poster-img" alt="..."><p class="pt-1"><p>${movie.title}</p> <span>${movie.rating}</span></p></div>`
+            mainPage.html(HTML);
+        })
     }
 
 });
