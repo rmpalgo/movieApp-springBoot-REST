@@ -122,9 +122,9 @@ $(document).ready( () => {
         let HTML = ``;
         api.getSingleMovie(id).then( (movie) => {
             console.log(movie);
-                HTML += `<div class="card mt-6 bg-transparent" style="width: 15rem;">
+                HTML += `<div class="card mt-6 bg-transparent" style="width: 18rem;">
                 <div class="dropdown">
-                    <span><i class="fas fa-ellipsis-h three-dots" style="left: 220px"></i></span>
+                    <span><i class="fas fa-ellipsis-h three-dots" style="left: 268px"></i></span>
                 <div class="dropdown-content" style="min-width: 220px">
                 <p id="delete-movie" data-id="${movie.id}">Delete</p>
                 </div>
@@ -138,6 +138,7 @@ $(document).ready( () => {
                                             <option value="5">5</option>
                                         </select><button class="mt-2 save-button" id="${movie.id}">Save</button></div>`
             mainPage.html(HTML);
+            deleteMovie();
             editMovieForm();
         })
     }
