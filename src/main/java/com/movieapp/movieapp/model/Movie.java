@@ -19,14 +19,18 @@ public class Movie {
     @Column
     private String poster;
 
+    @Column
+    String year;
+
     public Movie() {
     }
 
-    public Movie(long id, String title, byte rating, String poster) {
+    public Movie(long id, String title, byte rating, String poster, String year) {
         this.id = id;
         this.title = title;
         this.rating = rating;
         this.poster = poster;
+        this.year = year;
     }
 
     public long getId() {
@@ -59,5 +63,13 @@ public class Movie {
 
     public void setPoster(String poster) {
         this.poster = poster;
+    }
+
+    public String getYear() {
+        return year;
+    }
+
+    public void setYear(String year) {
+        this.year = year;
     }
 }

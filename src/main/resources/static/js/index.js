@@ -11,7 +11,7 @@ $(document).ready( () => {
             console.log('Here are all the movies:');
             let HTML = ``;
 
-            movies.forEach(({title, rating, poster, id}) => {
+            movies.forEach(({title, rating, poster, year, id}) => {
                 console.log(`id#${id} - ${title} - rating: ${rating}`);
                 HTML += `
 <div class="card mt-6 bg-transparent" style="width: 11rem;">
@@ -23,7 +23,7 @@ $(document).ready( () => {
     </div>
     <img src="${poster}" data-id="${id}" id="poster-img" class="card-img-top" alt="...">
     <p class="pt-1">
-        <p>${title}</p> 
+        <p>${title} <span>${year}</span></p> Rating: 
         <span>${rating}</span>
     </p>
 </div>`
@@ -72,11 +72,14 @@ $(document).ready( () => {
         renderLoading();
         api.getOMBDData( newTitle ).then( movieData => {
             let newMoviePoster = movieData.Search[0].Poster;
+            let year = movieData.Search[0].Year;
+            console.log("YEAR: " + year);
             let newMovieObj = {
                 id: uniqueID,
                 title: newTitle,
                 rating: newRating,
-                poster: newMoviePoster
+                poster: newMoviePoster,
+                year: year
             }
             api.editMovie(newMovieObj, uniqueID).then( response => { console.log(response); displayMoviesFromJSON();})
                 .catch( error => console.log(error) );
@@ -93,11 +96,15 @@ $(document).ready( () => {
         api.getOMBDData( movieTitleValue ).then( movieData => {
             console.log(movieData);
             let moviePoster = movieData.Search[0].Poster;
+            let year = movieData.Search[0].Year;
+            console.log("YEAR: " + year);
             console.log(moviePoster);
             api.addMovie( {
                 title: movieTitleValue,
                 rating: ratingValue,
-                poster: movieData.Search[0].Poster
+                poster: movieData.Search[0].Poster,
+                year: year
+
             }).then( result => {
                 console.log(result)
                 displayMoviesFromJSON();

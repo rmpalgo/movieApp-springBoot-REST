@@ -45,6 +45,7 @@ public class MovieService {
         existingMovie.setTitle(movie.getTitle());
         existingMovie.setRating(movie.getRating());
         existingMovie.setPoster(movie.getPoster());
+        existingMovie.setYear(movie.getYear());
         return moviesRepository.save(existingMovie);
     }
 
