@@ -13,18 +13,22 @@ $(document).ready( () => {
 
             movies.forEach(({title, rating, poster, id}) => {
                 console.log(`id#${id} - ${title} - rating: ${rating}`);
-                HTML += `<div class="card mt-6 bg-transparent" style="width: 11rem;">
-<div class="dropdown">
-  <span><i class="fas fa-ellipsis-h three-dots" ></i></span>
-  <div class="dropdown-content">
-  <p class="edit-title" data-id="${title}/${id}">Edit</p>
-  <p id="delete-movie" data-id="${id}">Delete</p>
-  </div>
-</div>
- <img src="${poster}" data-id="${id}" id="poster-img" class="card-img-top" alt="..."><p class="pt-1"><p>${title}</p> <span>${rating}</span></p></div>`
+                HTML += `
+<div class="card mt-6 bg-transparent" style="width: 11rem;">
+    <div class="dropdown">
+      <span><i class="fas fa-ellipsis-h three-dots" ></i></span>
+      <div class="dropdown-content">
+      <p id="delete-movie" data-id="${id}">Delete</p>
+      </div>
+    </div>
+    <img src="${poster}" data-id="${id}" id="poster-img" class="card-img-top" alt="...">
+    <p class="pt-1">
+        <p>${title}</p> 
+        <span>${rating}</span>
+    </p>
+</div>`
             });
             $('#movies-display').html(HTML);
-            editMovieForm();
             deleteMovie();
             singlePageView();
         }).catch((error) => {
@@ -36,37 +40,6 @@ $(document).ready( () => {
     ( () => { renderLoading();
         displayMoviesFromJSON();
     })();
-
-    function editMovieForm() {
-        $('.edit-title').on('click', function (e) {
-            e.preventDefault();
-            let dataID = $(this).attr('data-id').split("/");
-            let title = dataID[0];
-            let uniqueID = dataID[1];
-            console.log(uniqueID);
-
-            console.log("DATA ID", title);
-            $(this).parent().parent().next().next().html(`<input class="input-text bg-transparent border-0" type="text" value="${title}" autofocus>
-                                       <select class="movie-rating mt-2">
-                                            <option value="1">1</option>
-                                            <option value="2">2</option>
-                                            <option value="3">3</option>
-                                            <option value="4">4</option>
-                                            <option value="5">5</option>
-                                        </select><button class="mt-2 save-button" data-id="${uniqueID}" id="${uniqueID}">Save</button>`)
-
-            //activate click listener for save button
-            $('.save-button').on('click', (e) => {
-                e.preventDefault();
-                console.log("CLICKED");
-                let newTitle =  $(this).parents().eq(2).children().last().children().first().val();
-                console.log(newTitle);
-                let newRating = $(this).parents().eq(2).children().last().children().first().next().val();
-                console.log(newRating);
-                editMovieToJSON(uniqueID, newTitle, newRating);
-            });
-        });
-    }
 
     function deleteMovie() {
         $('p#delete-movie').on('click', function(e) {
@@ -138,7 +111,6 @@ $(document).ready( () => {
             let id = $(this).attr('data-id');
             console.log(id);
             viewSinglePage(id);
-
         });
         singleTitle.css("cursor", "pointer");
     }
@@ -154,13 +126,36 @@ $(document).ready( () => {
                 <div class="dropdown">
                     <span><i class="fas fa-ellipsis-h three-dots" style="left: 220px"></i></span>
                 <div class="dropdown-content" style="min-width: 220px">
-                 <p class="edit-title" data-id="${movie.title}/${movie.id}">Edit</p>
                 <p id="delete-movie" data-id="${movie.id}">Delete</p>
                 </div>
                 </div>
-                <img src="${movie.poster}" data-id="${movie.id}" id="poster-img" alt="..."><p class="pt-1"><p>${movie.title}</p> <span>${movie.rating}</span></p></div>`
+                <img src="${movie.poster}" data-id="${movie.id}" id="poster-img" alt="..."><input class="input-text bg-transparent border-0" type="text" value="${movie.title}" autofocus>
+                                       <select class="movie-rating mt-2">
+                                            <option value="1">1</option>
+                                            <option value="2">2</option>
+                                            <option value="3">3</option>
+                                            <option value="4">4</option>
+                                            <option value="5">5</option>
+                                        </select><button class="mt-2 save-button" id="${movie.id}">Save</button></div>`
             mainPage.html(HTML);
+            editMovieForm();
         })
+    }
+
+    function editMovieForm() {
+        let saveButton = $('button.save-button');
+        saveButton.css("cursor", "pointer");
+        saveButton.on('click', function (e) {
+            e.preventDefault();
+            let id = $(this).attr('id');
+            let editedTitle = $(this).prev().prev().val();
+            let editedRating = $(this).prev().val();
+            console.log("EDITED RATING: " + editedRating);
+            //activate click listener for save button
+
+            editMovieToJSON(id, editedTitle, editedRating);
+
+        });
     }
 
     $("#notflix-icon").click(() => {

@@ -39,8 +39,9 @@ public class MovieService {
 
     //update Movie
     public Movie updateMovie(Movie movie) {
-        Movie existingMovie = moviesRepository.findById(movie.getId()).orElse(null);
-        assert existingMovie != null;
+        System.out.println("ID" + "  " + movie.getId());
+        System.out.println("Title" + "  " + movie.getTitle());
+        Movie existingMovie = moviesRepository.getOne(movie.getId());
         existingMovie.setTitle(movie.getTitle());
         existingMovie.setRating(movie.getRating());
         existingMovie.setPoster(movie.getPoster());
